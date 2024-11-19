@@ -18,6 +18,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Python
+        uses: actions/setup-python@v5.1.1
+        with:
+          python-version: '3.10'  
+  
+      - name: Install stackql-deploy
+        shell: bash
+        run: pip install -q stackql-deploy pyyaml || { echo "pip install failed"; exit 1; }
+  
+      - name: Run stackql-deploy
+        shell: bash
+        run: stackql-deploy info
+
       - name: Deploy a Stack
         uses: stackql/stackql-deploy-action@v1.0.1
         with:
@@ -27,4 +40,4 @@ jobs:
           env_vars: 'AWS_REGION=us-east-1'
           show_queries: 'true'
           log_level: 'DEBUG'
-          
+
