@@ -121,7 +121,7 @@ resources:
       - name: instance_name
         value: "{{ stack_name }}-{{ stack_env }}-instance"
       - name: ami_id
-        value: ami-030a5acd7c996ef60
+        value: ami-012967cc5a8c9f891
       - name: instance_type
         value: t2.micro
       - name: instance_subnet_id

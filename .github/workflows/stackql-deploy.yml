@@ -23,10 +23,6 @@ jobs:
         with:
           python-version: '3.10'  
   
-      - name: Install stackql-deploy
-        shell: bash
-        run: pip install -q stackql-deploy pyyaml || { echo "pip install failed"; exit 1; }
-      
       - name: Print StackQL Deploy Info
         uses: stackql/stackql-deploy-action@v1.0.2
         with:
@@ -40,4 +36,4 @@ jobs:
           stack_env: 'dev'
           env_vars: 'AWS_REGION=us-east-1'
           show_queries: 'true'
-          log_level: 'debug'
+          # log_level: 'debug'
