@@ -25,3 +25,4 @@ jobs:
           stack_dir: 'aws-stack'
           stack_env: 'dev'
           env_vars: 'AWS_REGION=us-east-1'
+          show_queries: 'true'
