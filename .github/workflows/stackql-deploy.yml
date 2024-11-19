@@ -26,18 +26,20 @@ jobs:
       - name: Install stackql-deploy
         shell: bash
         run: pip install -q stackql-deploy pyyaml || { echo "pip install failed"; exit 1; }
-  
-      - name: Run stackql-deploy
-        shell: bash
-        run: stackql-deploy info
+      
+      - name: Print StackQL Deploy Info
+        uses: stackql/stackql-deploy-action@v1.0.2
+        with:
+          command: 'info'
 
       - name: Deploy a Stack
-        uses: stackql/stackql-deploy-action@v1.0.1
+        uses: stackql/stackql-deploy-action@v1.0.2
         with:
           command: 'build'
           stack_dir: 'aws-stack'
           stack_env: 'dev'
           env_vars: 'AWS_REGION=us-east-1'
           show_queries: 'true'
-          log_level: 'DEBUG'
+          log_level: 'debug'
 
+      
