@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy a Stack
-        uses: stackql/setup-deploy@v1.0.1
+        uses: stackql/stackql-deploy-action@v1.0.1
         with:
           command: 'build'
           stack-dir: 'aws-stack'
