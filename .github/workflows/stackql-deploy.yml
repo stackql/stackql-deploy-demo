@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy a Stack
-        uses: stackql/stackql-deploy-action@v1.0.1
+        uses: stackql/stackql-deploy-action@v1
         with:
           command: 'build'
-          stack-dir: 'aws-stack'
-          stack-env: 'dev'
-          env-vars: 'AWS_REGION=us-east-1'
+          stack_dir: 'aws-stack'
+          stack_env: 'dev'
+          env_vars: 'AWS_REGION=us-east-1'
