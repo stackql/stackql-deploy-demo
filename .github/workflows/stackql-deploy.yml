@@ -1,0 +1,27 @@
+name: Demo of stackql-deploy using GitHub Actions
+
+on:
+  push:
+    branches: 
+    - main
+  workflow_dispatch:
+
+jobs:
+  deploy-aws-stack:
+    name: Deploy AWS Stack
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy a Stack
+        uses: stackql/setup-deploy@v1.0.1
+        with:
+          command: 'build'
+          stack-dir: 'aws-stack'
+          stack-env: 'dev'
+          env-vars: 'AWS_REGION=us-east-1'
