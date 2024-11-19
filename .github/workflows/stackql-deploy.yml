@@ -27,3 +27,4 @@ jobs:
           env_vars: 'AWS_REGION=us-east-1'
           show_queries: 'true'
           log_level: 'DEBUG'
+          
