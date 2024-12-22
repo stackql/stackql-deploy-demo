@@ -1,0 +1,43 @@
+/*+ exists */
+SELECT COUNT(*) as count FROM google.storage.buckets
+WHERE name = '{{ gcp_bucket_name }}'
+AND project = '{{ gcp_project_id }}'
+
+/*+ create */
+INSERT INTO google.storage.buckets
+(
+ data__name,
+ data__location,
+ data__labels,
+ project
+)
+SELECT 
+'{{ gcp_bucket_name }}',
+'{{ gcp_region }}',
+'{{ bucket_labels }}',
+'{{ gcp_project_id }}';
+
+
+/*+ statecheck, retries=3, retry_delay=1 */
+SELECT COUNT(*) as count
+FROM google.storage.buckets
+WHERE name = '{{ gcp_bucket_name }}'
+AND project = '{{ gcp_project_id }}'
+AND LOWER(location) = LOWER('{{ gcp_region }}');
+
+
+/*+ exports, retries=3, retry_delay=1 */
+SELECT 
+projectNumber as "gcp_project_number",
+name as "gcs_bucket_name", 
+id as "gcs_id",
+labels as "gcs_labels"
+FROM google.storage.buckets
+WHERE LOWER(location) = LOWER('{{ gcp_region }}')
+AND name = '{{ gcp_bucket_name }}'
+AND project = '{{ gcp_project_id }}';
+
+
+/*+ delete */
+DELETE FROM google.storage.buckets
+WHERE bucket = '{{ gcp_bucket_name }}';

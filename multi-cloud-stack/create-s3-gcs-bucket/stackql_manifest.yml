@@ -1,0 +1,66 @@
+#
+# aws starter project manifest file, add and update values as needed
+#
+version: 1
+name: "s3-gcs-bucket"
+description: description for "s3-gcs-bucket"
+providers:
+  - aws
+  - google
+globals:
+  # aws global values
+  - name: aws_region
+    description: aws region
+    value: "{{ AWS_REGION }}"
+  - name: global_tags
+    value:
+      - Key: Provisioner
+        Value: stackql
+      - Key: StackName
+        Value: "{{ stack_name }}"
+      - Key: StackEnv
+        Value: "{{ stack_env }}"
+      - Key: Provider
+        Value: aws
+  # google global values
+  - name: gcp_region
+    description: gcp region
+    value: "{{ GCP_REGION }}"
+  - name: gcp_project_id
+    description: google project name
+    value: "{{ MY_PROJECT_NAME }}"
+  - name: global_labels
+    value:
+      provisioner: stackql
+      stack_name: "{{ stack_name }}"
+      stack_env: "{{ stack_env }}"
+      provider: gcp
+resources:
+  - name: example_s3_bucket
+    props:
+      - name: aws_bucket_name
+        value: "{{ stack_env }}-{{ stack_name }}"
+      - name: bucket_tags
+        value:
+          - Key: Name
+            Value: "{{ stack_env }}-{{ stack_name }}"
+        merge: 
+          - global_tags
+    exports:
+      - aws_bucket_name
+      - arn
+      - aws_tags
+  - name: example_gcs_bucket
+    props:
+      - name: gcp_bucket_name
+        value: "{{ stack_env }}-{{ stack_name }}"
+      - name: bucket_labels
+        value:
+          name: "{{ stack_env }}-{{ stack_name }}"
+        merge: 
+          - global_labels
+    exports:
+      - gcp_project_number
+      - gcs_bucket_name
+      - gcs_id
+      - gcs_labels

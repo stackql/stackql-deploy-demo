@@ -1,0 +1,44 @@
+/*+ exists */
+SELECT COUNT(*) as count FROM
+(
+SELECT bucket_name
+FROM aws.s3.buckets
+WHERE region = '{{ aws_region }}'
+AND bucket_name = '{{ aws_bucket_name }}'
+) t;
+
+/*+ create */
+INSERT INTO aws.s3.buckets (
+ BucketName,
+ Tags,
+ region
+)
+SELECT 
+'{{ aws_bucket_name }}',
+'{{ bucket_tags }}',
+'{{ aws_region }}';
+
+/*+ statecheck, retries=3, retry_delay=1 */
+SELECT COUNT(*) as count FROM
+(
+SELECT bucket_name,
+arn
+FROM aws.s3.buckets
+WHERE region = '{{ aws_region }}'
+AND bucket_name = '{{ aws_bucket_name }}'
+) t;
+WHERE arn = 'arn:aws:s3:::{{ aws_bucket_name }}';
+
+/*+ exports, retries=3, retry_delay=1 */
+SELECT aws_bucket_name, arn, aws_tags FROM
+(
+SELECT bucket_name as "aws_bucket_name", arn, tags as "aws_tags"
+FROM aws.s3.buckets
+WHERE region = '{{ aws_region }}'
+AND bucket_name = '{{ aws_bucket_name }}'
+) t;
+
+/*+ delete */
+DELETE FROM aws.s3.buckets
+WHERE data__Identifier = '{{ aws_bucket_name }}'
+AND region = '{{ aws_region }}'
