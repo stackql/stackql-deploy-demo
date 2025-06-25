@@ -41,7 +41,7 @@ For example, to deploy the stack to an environment labeled `sit`, run the follow
 
 ```bash
 stackql-deploy build \
-examples/aws/aws-stack sit \
+aws-stack sit \
 -e AWS_REGION=ap-southeast-2
 ```
 
@@ -49,7 +49,7 @@ Use the `--dry-run` flag to view the queries to be run without actually running 
 
 ```bash
 stackql-deploy build \
-examples/aws/aws-stack sit \
+aws-stack sit \
 -e AWS_REGION=ap-southeast-2 \
 --dry-run
 ```
@@ -60,16 +60,16 @@ To test a stack to ensure that all resources are present and in the desired stat
 
 ```bash
 stackql-deploy test \
-examples/aws/aws-stack sit \
+aws-stack sit \
 -e AWS_REGION=ap-southeast-2
 ```
 
 ### Tearing down a stack
 
-To destroy or deprovision all resources in a stack for our `sit` deployment example, run the following:
+To destroy or deprovision all resources in a stack for our `dev` deployment example, run the following:
 
 ```bash
 stackql-deploy teardown \
-examples/aws/aws-stack sit \
--e AWS_REGION=ap-southeast-2
+aws-stack dev \
+-e AWS_REGION=us-east-1
 ```

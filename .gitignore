@@ -9,5 +9,6 @@ stackql-azure-cloud-shell.sh
 stackql-google-cloud-shell.sh
 .envrc
 .env
+myenv/
 
 .DS_Store
