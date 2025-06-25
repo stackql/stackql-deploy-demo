@@ -8,5 +8,6 @@ stackql-aws-cloud-shell.sh
 stackql-azure-cloud-shell.sh
 stackql-google-cloud-shell.sh
 .envrc
+.env
 
 .DS_Store
